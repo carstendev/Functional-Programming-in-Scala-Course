@@ -48,28 +48,25 @@ object Main {
    */
   def balance(chars: List[Char]): Boolean = {
 
-    val deque = new ArrayDeque[Char]();
-
-    balance(chars, deque)
-  }
-
-  def balance(chars: List[Char], deque: ArrayDeque[Char]): Boolean = {
-
-    if (chars.isEmpty) { // Keine Chars mehr zu prüfen
-      return deque.size() == 0
-    } else if (chars.head == '(') {
-      deque.push(chars.head)
-    } else if (chars.head == ')') {
-      if (deque.isEmpty()) {
-        return false
-      }
-      deque.pop()
-      if (chars.isEmpty) {
+    def balance(chars: List[Char], deque: ArrayDeque[Char]): Boolean = {
+      if (chars.isEmpty) { // Keine Chars mehr zu prüfen
         return deque.size() == 0
+      } else if (chars.head == '(') {
+        deque.push(chars.head)
+      } else if (chars.head == ')') {
+        if (deque.isEmpty()) {
+          return false
+        }
+        deque.pop()
+        if (chars.isEmpty) {
+          return deque.size() == 0
+        }
       }
+      return balance(chars.tail, deque)
     }
-    return balance(chars.tail, deque)
 
+    val deque = new ArrayDeque[Char]();
+    balance(chars, deque)
   }
 
   /**
